@@ -59,4 +59,5 @@ public class ComparerTest {
 		List<ISynsetID> hyponyms = c.getHyponyms(synsets);
 		assertEquals (hyponyms.size(), 20);
 	}
+	
 }

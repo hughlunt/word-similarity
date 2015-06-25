@@ -53,8 +53,8 @@ public class Comparer {
 		List<ISynsetID> common = new ArrayList<ISynsetID>(word1Synsets);
 		common.retainAll(word2Synsets);
 		if (common.size() != 0) 
-			return true;
-		return false;
+			return true; 
+		return false; 
 	}
 
 	public List<ISynsetID> getHypernyms(List<ISynsetID> synsets) {
