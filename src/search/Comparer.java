@@ -48,41 +48,27 @@ public class Comparer {
 		return synsets;
 	}
 
-	public boolean synsetMatch(List<ISynsetID> word1Synsets,
+	public ISynsetID synsetMatch(List<ISynsetID> word1Synsets,
 			List<ISynsetID> word2Synsets) {
 		List<ISynsetID> common = new ArrayList<ISynsetID>(word1Synsets);
 		common.retainAll(word2Synsets);
 		if (common.size() != 0) 
-			return true; 
-		return false; 
+			return common.get(0); 
+		return null; 
 	}
 
-	public List<ISynsetID> getHypernyms(List<ISynsetID> synsets) {
-		return getRelatedSynsets(synsets, HYPERNYM);
+	public List<ISynsetID> getHypernyms(ISynsetID synset) {
+		List<ISynsetID> hypernyms = new ArrayList<ISynsetID>();
+		hypernyms.addAll(dict.getSynset(synset).getRelatedSynsets(Pointer.HYPERNYM));
+		hypernyms.addAll(dict.getSynset(synset).getRelatedSynsets(Pointer.HYPERNYM_INSTANCE));
+		return hypernyms;
 	}
 
-
-	public List<ISynsetID> getHyponyms(List<ISynsetID> synsets) {
-		return getRelatedSynsets(synsets, HYPONYM);
-	}
-
-	private List<ISynsetID> getRelatedSynsets(List<ISynsetID> synsets,
-			String type) {
-		List<ISynsetID> relations = new ArrayList<ISynsetID>();
-		if (type == HYPERNYM) {
-			for (ISynsetID sid : synsets) {
-				relations.addAll(dict.getSynset(sid).getRelatedSynsets(Pointer.HYPERNYM));
-				relations.addAll(dict.getSynset(sid).getRelatedSynsets(Pointer.HYPERNYM_INSTANCE));
-			}
-		}
-		else if (type == HYPONYM) {
-			for (ISynsetID sid : synsets) {
-				relations.addAll(dict.getSynset(sid).getRelatedSynsets(Pointer.HYPONYM));
-				relations.addAll(dict.getSynset(sid).getRelatedSynsets(Pointer.HYPONYM_INSTANCE));
-			}
-		}
-
-		return relations;
+	public List<ISynsetID> getHyponyms(ISynsetID synset) {
+		List<ISynsetID> hyponyms = new ArrayList<ISynsetID>();
+		hyponyms.addAll(dict.getSynset(synset).getRelatedSynsets(Pointer.HYPONYM));
+		hyponyms.addAll(dict.getSynset(synset).getRelatedSynsets(Pointer.HYPONYM_INSTANCE));
+		return hyponyms;
 	}
 
 }
